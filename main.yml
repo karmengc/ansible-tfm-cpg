@@ -1,0 +1,6 @@
+---
+
+- name: Provision Raspberrys OS Level
+  hosts: cluster
+  roles:
+    - ansible-provision-rpis

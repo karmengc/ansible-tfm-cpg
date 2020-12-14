@@ -1,0 +1,16 @@
+
+
+[cluster]
+master
+worker1
+worker2
+
+
+[k8smaster]
+master
+
+[k8snodes]
+worker1
+worker2
+
+

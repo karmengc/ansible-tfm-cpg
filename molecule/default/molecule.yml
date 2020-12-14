@@ -1,0 +1,46 @@
+---
+dependency:
+  name: "galaxy"
+driver:
+  name: "vagrant"
+  provider:
+    name: "virtualbox"
+lint: |
+    set -e
+    yamllint .
+    ansible-lint
+    flake8
+platforms:
+  - name: master
+    box: ubuntu/groovy64
+    instance_raw_config_args:
+      - "vm.network 'private_network', ip: '192.168.130.150'"
+    memory: 1024
+  - name: worker1
+    box: ubuntu/groovy64
+    instance_raw_config_args:
+      - "vm.network 'private_network', ip: '192.168.130.151'"
+    memory: 1024
+  - name: worker2
+    box: ubuntu/groovy64
+    instance_raw_config_args:
+      - "vm.network 'private_network', ip: '192.168.130.152'"
+    memory: 1024
+provisioner:
+  name: ansible
+  config_options:
+    ssh_connection:
+      pipelining: true
+  lint: |
+    set -e
+    yamllint .
+    ansible-lint
+    flake8
+    name: "ansible-lint"
+verifier:
+  name: "testinfra"
+  lint: |
+    set -e
+    yamllint .
+    ansible-lint
+    flake8

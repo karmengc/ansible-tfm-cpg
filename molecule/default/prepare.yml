@@ -1,0 +1,12 @@
+---
+- name: Prepare all
+  hosts: all
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Install python for Ansible
+      #      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      raw: apt -y update && apt -y upgrade
+      become: true
+      changed_when: false
+
