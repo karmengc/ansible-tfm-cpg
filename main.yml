@@ -4,3 +4,4 @@
   hosts: cluster
   roles:
     - ansible-provision-rpis
+    - ansible-k8s-install

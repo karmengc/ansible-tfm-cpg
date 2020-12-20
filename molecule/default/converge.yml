@@ -3,5 +3,26 @@
   hosts: all
   become: true
   gather_facts: true
+  vars_files:
+    - "provision_vars.yml"
+    - "provision_secret.yml"
+    - "k8s_vars.yml"
   roles:
     - role: "ansible-provision-rpis"
+    - role: "ansible-k8s-install"
+  post_tasks:
+    - name: Get cluster info.
+      command: kubectl cluster-info
+      changed_when: false
+      register: kubernetes_info
+
+    - name: Print cluster info.
+      debug: var=kubernetes_info.stdout
+
+    - name: Get all running pods.
+      command: kubectl get pods --all-namespaces
+      changed_when: false
+      register: kubernetes_pods
+
+    - name: Print list of running pods.
+      debug: var=kubernetes_pods.stdout

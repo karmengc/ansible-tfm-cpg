@@ -15,7 +15,7 @@ platforms:
     box: ubuntu/groovy64
     instance_raw_config_args:
       - "vm.network 'private_network', ip: '192.168.130.150'"
-    memory: 1024
+    memory: 2048
   - name: worker1
     box: ubuntu/groovy64
     instance_raw_config_args:
@@ -28,6 +28,11 @@ platforms:
     memory: 1024
 provisioner:
   name: ansible
+  inventory:
+    links:
+      hosts: ../../hosts
+      group_vars: ../../group_vars/
+      host_vars: ../../host_vars/
   config_options:
     ssh_connection:
       pipelining: true

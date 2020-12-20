@@ -1,0 +1,15 @@
+---
+
+docker_users: vagrant
+docker_install_compose: false
+docker_service_state: started
+docker_service_enabled: true
+docker_restart_handler_state: restarted
+
+kubernetes_allow_pods_on_master: false
+
+kubernetes_enable_web_ui: true
+
+kubernetes_kubelet_extra_args: "--fail-swap-on=false --cgroup-driver=cgroupfs"
+
+kubernetes_apiserver_advertise_address: "{{ ansible_enp0s8.ipv4.address }}"
