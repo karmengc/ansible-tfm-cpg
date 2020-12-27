@@ -1,0 +1,11 @@
+---
+
+provision_rpis_packages: ['vim','curl','wget','iproute2','nfs-common']
+
+provision_postfix: true
+
+provision_mail_from: "karmengc@gmail.com"
+provision_mail_certificate: ""
+provision_mail_smarthost: "smtp.gmail.com"
+provision_mail_smarthost_port: "587"
+provision_mail_localsmtp: false

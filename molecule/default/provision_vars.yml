@@ -1,10 +1,13 @@
 ---
+
+provision_cluster_user: "vagrant"
+
 provision_rpis_cluster:
   - { name: "master", ip: "192.168.130.150" } 
   - { name: "worker1", ip: "192.168.130.151" }
   - { name: "worker2", ip: "192.168.130.152" }
 
-provision_rpis_packages: ['vim','curl','wget','iproute2']
+provision_rpis_packages: ['vim','curl','wget','iproute2','nfs-common']
 
 provision_postfix: true
 
@@ -13,4 +16,14 @@ provision_mail_certificate: ""
 provision_mail_smarthost: "smtp.gmail.com"
 provision_mail_smarthost_port: "587"
 provision_mail_localsmtp: false
+
+host_ip: "192.168.130.1"
+host_nfs_dir_exported: "/home/carmen/UPO/TFM/nfs"
+
+provision_mount_nfs: true
+
+provision_nfs_share_mounts:
+  - path: /mnt/nfs
+    location: "{{ host_ip }}:{{ host_nfs_dir_exported }}"
+    opts: rw
 
