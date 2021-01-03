@@ -1,7 +1,7 @@
 ---
 
 docker_users: vagrant
-docker_install_compose: false
+docker_install_compose: true
 docker_service_state: started
 docker_service_enabled: true
 docker_restart_handler_state: restarted

@@ -1,13 +1,17 @@
 ---
 
+#ansible_python_interpreter: '{{ ansible_playbook_python }}'
+
+#provision_cluster_user: "vagrant"
 provision_cluster_user: "vagrant"
+provision_cluster_user_passwd: "vagrant"
 
 provision_rpis_cluster:
   - { name: "master", ip: "192.168.130.150" } 
   - { name: "worker1", ip: "192.168.130.151" }
   - { name: "worker2", ip: "192.168.130.152" }
 
-provision_rpis_packages: ['vim','curl','wget','iproute2','nfs-common']
+provision_rpis_packages: ['vim','curl','wget','iproute2','nfs-common','python3-pip','nfs-kernel-server','apache2-utils']
 
 provision_postfix: true
 
@@ -22,8 +26,21 @@ host_nfs_dir_exported: "/home/carmen/UPO/TFM/nfs"
 
 provision_mount_nfs: true
 
-provision_nfs_share_mounts:
+provision_nfs_host_share_mounts:
   - path: /mnt/nfs
     location: "{{ host_ip }}:{{ host_nfs_dir_exported }}"
     opts: rw
+
+provision_nfs_master_share_mounts:
+  - path: /opt/certs
+    location: "{{ provision_rpis_cluster[0].ip }}:/opt/certs"
+    opts: rw
+  - path: /opt/registry
+    location: "{{ provision_rpis_cluster[0].ip }}:/opt/registry"
+    opts: rw
+  - path: /opt/auth
+    location: "{{ provision_rpis_cluster[0].ip }}:/opt/auth"
+    opts: rw
+
+provision_nfs_master_exports: [ "/opt/certs *(rw,sync,no_root_squash)", "/opt/registry *(rw,sync,no_root_squash)", "/opt/auth *(rw,sync,no_root_squash)" ]
 

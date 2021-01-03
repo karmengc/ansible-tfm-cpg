@@ -10,6 +10,8 @@
   roles:
     - role: "ansible-provision-rpis"
     - role: "ansible-k8s-install"
+    - role: "ansible-k8s-deploy"
+      when: kubernetes_role == 'master'
   post_tasks:
     - name: Get cluster info.
       command: kubectl cluster-info
