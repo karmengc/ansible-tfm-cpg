@@ -7,6 +7,8 @@
     - "provision_vars.yml"
     - "provision_secret.yml"
     - "k8s_vars.yml"
+  pre_tasks:
+    - include_tasks: vagrant-setup.yml
   roles:
     - role: "ansible-provision-rpis"
     - role: "ansible-k8s-install"

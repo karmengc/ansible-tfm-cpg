@@ -44,3 +44,8 @@ provision_nfs_master_share_mounts:
 
 provision_nfs_master_exports: [ "/opt/certs *(rw,sync,no_root_squash)", "/opt/registry *(rw,sync,no_root_squash)", "/opt/auth *(rw,sync,no_root_squash)" ]
 
+
+#No desactivamos swap, puesto que en la imagen elegida viene desactivada por defecto
+provision_disable_swap: false
+provision_swap_file_path: ""
+

@@ -1,0 +1,16 @@
+
+
+[cluster]
+master master_ip=192.168.130.150 kubernetes_role=master
+worker1 worker1_ip=192.168.130.151 kubernetes_role=node
+worker2 worker2_ip=192.168.130.152 kubernetes_role=node
+
+
+[k8smaster]
+master
+
+[k8snodes]
+worker1
+worker2
+
+
