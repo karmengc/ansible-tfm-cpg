@@ -1,3 +1,4 @@
 ---
 
 kubernetes_role: node
+node_ip: "192.168.130.151"

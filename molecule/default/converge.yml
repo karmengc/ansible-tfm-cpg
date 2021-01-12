@@ -7,6 +7,7 @@
     - "provision_vars.yml"
     - "provision_secret.yml"
     - "k8s_vars.yml"
+    - "k8s_deploy_secret.yml"
   pre_tasks:
     - include_tasks: vagrant-setup.yml
   roles:
