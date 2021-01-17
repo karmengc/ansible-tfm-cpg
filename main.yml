@@ -2,6 +2,11 @@
 
 - name: Provision Raspberrys OS Level
   hosts: cluster
+  become: true
+  gather_facts: true
+  vars_files: group_vars/provision_all_secret.yml
+    #  pre_tasks:
+    #    - include_tasks: debug_vars.yml
   roles:
     - ansible-provision-rpis
-    - ansible-k8s-install
+      #    - ansible-k8s-install

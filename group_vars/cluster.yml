@@ -1,0 +1,62 @@
+---
+
+provision_netplan_configure: true
+netplan_remove_existing: true
+
+provision_cluster_user: "carmen"
+
+provision_rpis_cluster:
+  - { name: "{{ hostvars['master'].ansible_hostname }}", ip: "{{ hostvars['master'].node_ip }}" } 
+  - { name: "{{ hostvars['worker1'].ansible_hostname }}", ip: "{{ hostvars['worker1'].node_ip }}" }
+  - { name: "{{ hostvars['worker2'].ansible_hostname }}", ip: "{{ hostvars['worker2'].node_ip }}" }
+
+#Listado de paquetes a instalar en todas las máquinas
+provision_rpis_packages: ['vim','curl','wget','iproute2','nfs-common','python3-pip','nfs-kernel-server','apache2-utils']
+
+
+#Variables para instalación y configuración de postfix
+provision_postfix: true
+
+provision_mail_from: "karmengc@gmail.com"
+provision_mail_certificate: ""
+provision_mail_smarthost: "smtp.gmail.com"
+provision_mail_smarthost_port: "587"
+provision_mail_localsmtp: false
+
+#Generar certificado autofirmado en master
+provision_master_selfcert: true
+
+#Variables para montar directorio del host principal por NFS en todas las RPis
+host_ip: "192.168.1.37"
+host_nfs_dir_exported: "/home/carmen/UPO/TFM/nfs"
+provision_mount_nfs: true
+provision_nfs_host_share_mounts:
+  - path: /mnt/nfs
+    location: "{{ host_ip }}:{{ host_nfs_dir_exported }}"
+    opts: rw
+
+# Exportar desde el Master carpetas NFS hacia los nodos
+provision_master_nfs2nodes: true
+
+#Variables para exportar desde el master directorios con información de su certificado autofirmado
+provision_nfs_master_share_mounts:
+  - path: /opt/certs
+    location: "{{ provision_rpis_cluster[0].ip }}:/opt/certs"
+    opts: rw
+  - path: /opt/registry
+    location: "{{ provision_rpis_cluster[0].ip }}:/opt/registry"
+    opts: rw
+  - path: /opt/auth
+    location: "{{ provision_rpis_cluster[0].ip }}:/opt/auth"
+    opts: rw
+
+provision_nfs_master_exports: [ "/opt/certs *(rw,sync,no_root_squash)", "/opt/registry *(rw,sync,no_root_squash)", "/opt/auth *(rw,sync,no_root_squash)" ]
+
+#No desactivamos swap, puesto que en la imagen elegida viene desactivada por defecto
+provision_disable_swap: false
+provision_swap_file_path: ""
+
+
+
+
+# vim: ff=unix:ai:et:sw=2:ts=2:

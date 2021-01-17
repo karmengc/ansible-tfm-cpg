@@ -1,9 +1,9 @@
 
 
 [cluster]
-master master_ip=192.168.130.150 kubernetes_role=master
-worker1 worker1_ip=192.168.130.151 kubernetes_role=node
-worker2 worker2_ip=192.168.130.152 kubernetes_role=node
+master node_ip=192.168.130.150 kubernetes_role=master provision_hostname="master"
+worker1 node_ip=192.168.130.151 kubernetes_role=node provision_hostname="worker1"
+worker2 node_ip=192.168.130.152 kubernetes_role=node provision_hostname="worker2"
 
 
 [k8smaster]

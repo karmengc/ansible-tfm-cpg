@@ -33,7 +33,7 @@ provisioner:
       #hosts: ../../hosts
       hosts: ./hosts
       group_vars: ../../group_vars/
-      host_vars: ../../host_vars/
+      host_vars: ./host_vars/
   config_options:
     ssh_connection:
       pipelining: true

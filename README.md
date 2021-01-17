@@ -23,6 +23,24 @@ También es ideal añadir los plugins de Vagrant:
 vagrant plugin install [vagrant-share,vagrant-vbguest]
 ```
 
+Por último, necesitaremos un usuario en las máquinas destino con el cual hacer SSH y que tenga permisos de administrador.
+
+Para que no sea necesaria la contraseña de sudo añadir a /etc/sudoers:
+```
+  usuario ALL=(ALL) NOPASSWD:ALL
+```
+
+**Vault password**
+Aquellas variables que contengan información sensible como contraseñas, se almacenarán en ficheros vault. Los cuales para poder ser
+desencriptados durante el despliegue, es necesario ejecutar previamente:
+
+```
+export ANSIBLE_VAULT_PASSWORD_FILE=/ruta_del_proyecto/ansible-tfm-cpg/.vault_pass.txt
+```
+
+Siendo .vault\_pass.txt un fichero que contendrá la contraseña de vault y que nunca debe ser subido al repositorio git del proyecto (ya se encuentra en .gitignore)
+
+
 
 Este proyecto se apoya en los siguientes roles:
 
@@ -31,6 +49,12 @@ Este proyecto se apoya en los siguientes roles:
 
 Rol que provisiona las Raspberrys a nivel de sistema operativo y paquetes básicos para su funcionamiento.
 
+# Netplan
+Si se desea se puede pasar una configuración para netplan. En caso de introducir alguna contraseña para wifi, por ejemplo,
+crear un fichero de vault a partir de los ejemplos host\_vars/nodo/wifi\_secret.yml.sample, así:
+```
+ansible-vault create host_vars/$NODO$/wifi-secret.sample
+```
 
 ## ansible-k8s-rpis
 
@@ -67,7 +91,7 @@ molecule converge --scenario-name default
 Para loguearse en las máquinas de prueba por SSH:
 
 ```
-molecule login master -h master --scenario-name=default
+molecule login -h master --scenario-name=default
 ```
 
 ## Iniciar agente SSH
@@ -84,12 +108,3 @@ ssh-add /home/carmen/.ssh/id_rsa_tfm
 
 Esta clave RSA ha sido generada previamente con ssh-keygen y copiada a los respectivos dispositivos mediante ssh-copy-id.
 
-## Vault password
-Aquellas variables que contengan información sensible como contraseñas, se almacenarán en ficheros vault. Los cuales para poder ser
-desencriptados durante el despliegue, es necesario ejecutar previamente:
-
-```
-export ANSIBLE_VAULT_PASSWORD_FILE=./.vault_pass.txt
-```
-
-Siendo .vault\_pass.txt un fichero que contendrá la contraseña de vault y que nunca debe ser subido al repositorio git del proyecto (ya se encuentra en .gitignore)

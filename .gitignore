@@ -1,2 +1,5 @@
 .vault_pass.txt
 roles/*
+group_vars/gmail_password_cpg.yml
+group_vars/provision_all_secret_cpg.yml
+host_vars/*/wifi_secret.yml
