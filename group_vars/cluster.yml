@@ -1,5 +1,7 @@
 ---
 
+######################### Variables para rol ansible-provision-rpis ##############################
+
 provision_netplan_configure: true
 netplan_remove_existing: true
 
@@ -55,6 +57,32 @@ provision_nfs_master_exports: [ "/opt/certs *(rw,sync,no_root_squash)", "/opt/re
 #No desactivamos swap, puesto que en la imagen elegida viene desactivada por defecto
 provision_disable_swap: false
 provision_swap_file_path: ""
+
+
+
+######################### Variables para rol ansible-k8s-install ##############################
+docker_users: carmen
+docker_install_compose: true
+docker_service_state: started
+docker_service_enabled: true
+docker_restart_handler_state: restarted
+
+
+# Used only for Debian/Ubuntu. Switch 'stable' to 'edge' if needed.
+docker_apt_release_channel: stable
+docker_apt_arch: arm64
+docker_apt_repository: "deb [arch={{ docker_apt_arch }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
+docker_apt_ignore_key_error: true
+docker_apt_gpg_key: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
+
+
+
+kubernetes_allow_pods_on_master: false
+
+kubernetes_enable_web_ui: true
+
+kubernetes_kubelet_extra_args: "--fail-swap-on=false --cgroup-driver=cgroupfs --node-ip={{ node_ip }}"
+
 
 
 

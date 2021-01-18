@@ -49,6 +49,13 @@ Este proyecto se apoya en los siguientes roles:
 
 Rol que provisiona las Raspberrys a nivel de sistema operativo y paquetes básicos para su funcionamiento.
 
+NOTA IMPORTANTE: para el despliegue de este proyecto en RPIs es necesario editar el fichero /boot/firmware/cmdline.txt y añadir al final de la línea:
+```
+cgroup_enable=memory cgroup_memory=1
+```
+O de lo contrario no funcionará Docker correctamente y en consecuencia no arrancará Kubernetes. Para más información ver: https://codestrian.com/index.php/2020/05/23/ubuntu-20-04-rancher-and-raspberry-pi/
+
+
 # Netplan
 Si se desea se puede pasar una configuración para netplan. En caso de introducir alguna contraseña para wifi, por ejemplo,
 crear un fichero de vault a partir de los ejemplos host\_vars/nodo/wifi\_secret.yml.sample, así:

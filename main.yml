@@ -9,4 +9,4 @@
     #    - include_tasks: debug_vars.yml
   roles:
     - ansible-provision-rpis
-      #    - ansible-k8s-install
+    - ansible-k8s-install

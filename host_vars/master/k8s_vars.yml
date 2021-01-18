@@ -1,0 +1,4 @@
+---
+
+kubernetes_role: master
+kubernetes_apiserver_advertise_address: "{{ node_ip }}"
