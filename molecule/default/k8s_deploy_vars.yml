@@ -1,0 +1,13 @@
+---
+
+fqdn: cluster.local
+deployment_dir: "{{ ansible_env.HOME }}/deployment"
+app_name: mattermost
+#app_name: myweb
+#app_port: 30043
+#app_port: 8080
+app_service_port: 80
+app_port: 8000
+#app_service_port: 30080
+app_log_volume: "/var/log/{{ app_name }}"
+
