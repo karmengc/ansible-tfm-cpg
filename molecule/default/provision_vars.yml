@@ -23,14 +23,13 @@ provision_mail_smarthost: "smtp.gmail.com"
 provision_mail_smarthost_port: "587"
 provision_mail_localsmtp: false
 
-host_ip: "192.168.130.1"
-host_nfs_dir_exported: "/home/carmen/UPO/TFM/nfs"
-
-provision_mount_nfs: true
-
+#Montar directorio desde el host desde el que se despliega en todos los nodos
+provision_host_ip: "192.168.130.1"
+provision_host_nfs_dir_exported: "/home/carmen/UPO/TFM/nfs"
+provision_nfs_host_mount: true
 provision_nfs_host_share_mounts:
   - path: /mnt/nfs
-    location: "{{ host_ip }}:{{ host_nfs_dir_exported }}"
+    location: "{{ provision_host_ip }}:{{ provision_host_nfs_dir_exported }}"
     opts: rw
 
 # Exportar desde el Master carpetas NFS hacia los nodos
@@ -47,12 +46,28 @@ provision_nfs_master_share_mounts:
   - path: /opt/auth
     location: "{{ provision_rpis_cluster[0].ip }}:/opt/auth"
     opts: rw
-  - path: /nfs/exports
+  - path: /nfs/exports/mattermost-postgres-pv
     location: "{{ provision_rpis_cluster[0].ip }}:/export/nfs/mattermost-postgres-pv"
+    opts: rw
+  - path: /nfs/exports/drupal-pv
+    location: "{{ provision_rpis_cluster[0].ip }}:/export/nfs/drupal-pv"
+    opts: rw
+      #  - path: /nfs/exports/drupal-pv-db
+      #    location: "{{ provision_rpis_cluster[0].ip }}:/export/nfs/drupal-pv-db"
+      #    opts: rw
+  - path: /nfs/exports/pv0
+    location: "{{ provision_rpis_cluster[0].ip }}:/export/nfs/pv0"
+    opts: rw
+  - path: /nfs/exports/pv1
+    location: "{{ provision_rpis_cluster[0].ip }}:/export/nfs/pv1"
+    opts: rw
+  - path: /nfs/exports/pv2
+    location: "{{ provision_rpis_cluster[0].ip }}:/export/nfs/pv2"
     opts: rw
 
 # Montar carpetas de master en los nodos q contienen el certificado
-provision_nfs_master_exports: [ "/opt/certs *(rw,sync,no_root_squash)", "/opt/registry *(rw,sync,no_root_squash)", "/opt/auth *(rw,sync,no_root_squash)", "/export/nfs/mattermost-postgres-pv *(rw,sync,no_root_squash)" ]
+#provision_nfs_master_exports: [ "/opt/certs *(rw,sync,no_root_squash)", "/opt/registry *(rw,sync,no_root_squash)", "/opt/auth *(rw,sync,no_root_squash)", "/export/nfs/mattermost-postgres-pv *(rw,sync,no_root_squash)", "/export/nfs/drupal-pv *(rw,sync,no_root_squash)", "/export/nfs/drupal-pv-db *(rw,sync,no_root_squash)" ]
+provision_nfs_master_exports: [ "/opt/certs *(rw,sync,no_root_squash)", "/opt/registry *(rw,sync,no_root_squash)", "/opt/auth *(rw,sync,no_root_squash)", "/export/nfs/mattermost-postgres-pv *(rw,sync,no_root_squash)", "/export/nfs/drupal-pv *(rw,sync,no_root_squash)", "/export/nfs/pv0 *(rw,sync,no_root_squash)", "/export/nfs/pv1 *(rw,sync,no_root_squash)", "/export/nfs/pv2 *(rw,sync,no_root_squash)"]
 
 
 #No desactivamos swap, puesto que en la imagen elegida viene desactivada por defecto

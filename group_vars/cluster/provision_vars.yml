@@ -30,12 +30,12 @@ provision_mail_localsmtp: false
 provision_master_selfcert: true
 
 #Variables para montar directorio del host principal por NFS en todas las RPis
-host_ip: "192.168.1.37"
-host_nfs_dir_exported: "/home/carmen/UPO/TFM/nfs"
-provision_mount_nfs: true
+provision_host_ip: "192.168.1.37"
+provision_host_nfs_dir_exported: "/home/carmen/UPO/TFM/nfs"
+provision_nfs_host_mount: true
 provision_nfs_host_share_mounts:
   - path: /mnt/nfs
-    location: "{{ host_ip }}:{{ host_nfs_dir_exported }}"
+    location: "{{ provision_host_ip }}:{{ provision_host_nfs_dir_exported }}"
     opts: rw
 
 # Exportar desde el Master carpetas NFS hacia los nodos

@@ -40,6 +40,22 @@ export ANSIBLE_VAULT_PASSWORD_FILE=/ruta_del_proyecto/ansible-tfm-cpg/.vault_pas
 
 Siendo .vault\_pass.txt un fichero que contendrá la contraseña de vault y que nunca debe ser subido al repositorio git del proyecto (ya se encuentra en .gitignore)
 
+Si no se dispone de servidor de DNS, es necesario modificar el fichero ''/etc/hosts/'' para que al desplegar se relacionen las Ips configuradas con los respectivos hosts. Si las direcciones IPs de las Rapsberrys son diferentes de las máquinas virtuales de pruebas, habrá que adaptar el fichero según estemos haciendo pruebas o desplegando sobre RPIs.
+
+Por ejemplo para hacer un despliegue con molecule de pruebas, comentamos y descomentamos:
+
+```
+#IPs RPIs
+#192.168.1.61 worker1
+#192.168.1.62 worker2
+#192.168.1.60 master myweb.cluster.local mattermost.cluster.local dashboard.k8s.ingress.cluster.local drupal.cluster.local
+#IPs MVs Molecule
+192.168.130.150 master myweb.cluster.local mattermost.cluster.local dashboard.k8s.ingress.cluster.local monitoring.cluster.local
+192.168.130.151 worker1
+192.168.130.152 worker2
+```
+Los nombres indicados en la línea de master corresponden con los asociados a los servicios desplegados y que se configuran en el controlador Nginx del cluster de Kubernetes.
+
 
 
 Este proyecto se apoya en los siguientes roles:
@@ -71,6 +87,11 @@ Rol que instala Kubernetes en el cluster. Repartiendo los servicios correspondie
 ## ansible-k8s-deploy
 
 Despliegue de pods y servicios en Kubernetes del cluster para un servicio de ..........
+
+
+
+
+
 
 
 ## Ejecutar proyecto
