@@ -20,12 +20,12 @@ platforms:
     box: ubuntu/groovy64
     instance_raw_config_args:
       - "vm.network 'private_network', ip: '192.168.130.151'"
-    memory: 1024
+    memory: 2048
   - name: worker2
     box: ubuntu/groovy64
     instance_raw_config_args:
       - "vm.network 'private_network', ip: '192.168.130.152'"
-    memory: 1024
+    memory: 2048
 provisioner:
   name: ansible
   inventory:
