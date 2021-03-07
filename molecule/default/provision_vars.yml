@@ -52,9 +52,6 @@ provision_nfs_master_share_mounts:
   - path: /nfs/exports/drupal-pv
     location: "{{ provision_rpis_cluster[0].ip }}:/export/nfs/drupal-pv"
     opts: rw
-      #  - path: /nfs/exports/drupal-pv-db
-      #    location: "{{ provision_rpis_cluster[0].ip }}:/export/nfs/drupal-pv-db"
-      #    opts: rw
   - path: /nfs/exports/pv0
     location: "{{ provision_rpis_cluster[0].ip }}:/export/nfs/pv0"
     opts: rw
@@ -66,7 +63,6 @@ provision_nfs_master_share_mounts:
     opts: rw
 
 # Montar carpetas de master en los nodos q contienen el certificado
-#provision_nfs_master_exports: [ "/opt/certs *(rw,sync,no_root_squash)", "/opt/registry *(rw,sync,no_root_squash)", "/opt/auth *(rw,sync,no_root_squash)", "/export/nfs/mattermost-postgres-pv *(rw,sync,no_root_squash)", "/export/nfs/drupal-pv *(rw,sync,no_root_squash)", "/export/nfs/drupal-pv-db *(rw,sync,no_root_squash)" ]
 provision_nfs_master_exports: [ "/opt/certs *(rw,sync,no_root_squash)", "/opt/registry *(rw,sync,no_root_squash)", "/opt/auth *(rw,sync,no_root_squash)", "/export/nfs/mattermost-postgres-pv *(rw,sync,no_root_squash)", "/export/nfs/drupal-pv *(rw,sync,no_root_squash)", "/export/nfs/pv0 *(rw,sync,no_root_squash)", "/export/nfs/pv1 *(rw,sync,no_root_squash)", "/export/nfs/pv2 *(rw,sync,no_root_squash)"]
 
 

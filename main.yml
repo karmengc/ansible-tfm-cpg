@@ -9,14 +9,30 @@
     #    - include_tasks: debug_vars.yml
   roles:
     - ansible-provision-rpis
-#    - ansible-k8s-install
-#
-#
-#
-#- name: Deploy applications at K8S
-#  hosts: master
-#  become: true
-#  gather_facts: true
-#  roles:
-#    - ansible-k8s-deploy
+    - ansible-k8s-install
+
+
+
+- name: Deploy applications at K8S
+  hosts: master
+  become: true
+  gather_facts: true
+  roles:
+    - ansible-k8s-deploy
+  post_tasks:
+    - name: Get cluster info.
+      command: kubectl cluster-info
+      changed_when: false
+      register: kubernetes_info
+
+    - name: Print cluster info.
+      debug: var=kubernetes_info.stdout
+
+    - name: Get all running pods.
+      command: kubectl get pods --all-namespaces
+      changed_when: false
+      register: kubernetes_pods
+
+    - name: Print list of running pods.
+      debug: var=kubernetes_pods.stdout
 

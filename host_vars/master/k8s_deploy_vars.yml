@@ -5,7 +5,6 @@ cluster_arch: "arm64"
 fqdn: cluster.local
 deployment_dir: "{{ ansible_env.HOME }}/deployment"
 
-#apps_to_deploy: {'myweb':'8080', 'mattermost':'8000'}
-apps_to_deploy: {'myweb':'8080'}
+apps_to_deploy: {'myweb':'8080', 'drupal':'80', 'monitoring':'9090', 'mattermost':'8000', 'monitoring.grafana':'80'}
 
 kubernetes_create_admin_dashb_user: true
