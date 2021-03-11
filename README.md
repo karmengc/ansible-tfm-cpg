@@ -25,10 +25,13 @@ vagrant plugin install [vagrant-share,vagrant-vbguest]
 
 Por último, necesitaremos un usuario en las máquinas destino con el cual hacer SSH y que tenga permisos de administrador.
 
-Para que no sea necesaria la contraseña de sudo añadir a /etc/sudoers:
+
+NOTA IMPORTANTE: para el despliegue de este proyecto en RPIs es necesario editar el fichero /boot/firmware/cmdline.txt de cada Raspberry y añadir al final de la línea:
 ```
-  usuario ALL=(ALL) NOPASSWD:ALL
+cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1
 ```
+O de lo contrario no funcionará Docker correctamente y en consecuencia no arrancará Kubernetes. Para más información ver: https://codestrian.com/index.php/2020/05/23/ubuntu-20-04-rancher-and-raspberry-pi/
+
 
 **Vault password**
 Aquellas variables que contengan información sensible como contraseñas, se almacenarán en ficheros vault. Los cuales para poder ser
@@ -65,11 +68,9 @@ Este proyecto se apoya en los siguientes roles:
 
 Rol que provisiona las Raspberrys a nivel de sistema operativo y paquetes básicos para su funcionamiento.
 
-NOTA IMPORTANTE: para el despliegue de este proyecto en RPIs es necesario editar el fichero /boot/firmware/cmdline.txt y añadir al final de la línea:
-```
-cgroup_enable=memory cgroup_memory=1
-```
-O de lo contrario no funcionará Docker correctamente y en consecuencia no arrancará Kubernetes. Para más información ver: https://codestrian.com/index.php/2020/05/23/ubuntu-20-04-rancher-and-raspberry-pi/
+Importante destacar que este rol hará el usuario elegido en la variable provision\_cluster\_user no tenga que poner la contraseña en cada operación sudo.
+
+Para más información ver el fichero README de este rol.
 
 
 # Netplan
@@ -79,19 +80,23 @@ crear un fichero de vault a partir de los ejemplos host\_vars/nodo/wifi\_secret.
 ansible-vault create host_vars/$NODO$/wifi-secret.sample
 ```
 
-## ansible-k8s-rpis
+## ansible-k8s-install
 
 Rol que instala Kubernetes en el cluster. Repartiendo los servicios correspondientes entre el máster y los nodos.
+
+Para más información ver el fichero README de este rol.
 
 
 ## ansible-k8s-deploy
 
-Despliegue de pods y servicios en Kubernetes del cluster para un servicio de ..........
+Despliegue de pods y servicios en Kubernetes en el cluster:
 
-
-
-
-
+  * Tomcat + MySQL - Stateless
+  * Mattermost + PostgreSQL (Almacenamiento persistente)
+  * Kubernetes Dashboard (es necesario loguearse con el token que se mostrará en las líneas finales del despliegue)
+  * Drupal + MariaDB cluster (Stateful)
+  * Prometheus + Grafana
+  * NGINX Controller (para controlar el acceso a cada una de las aplicaciones por un único punto de entrada)
 
 
 ## Ejecutar proyecto
@@ -101,6 +106,13 @@ Para ejecutar el proyecto completo introducir en la línea de comandos desde el 
 ```
 ansible-playbook main.yml -i hosts
 ```
+
+En caso de que el usuario con el cual conectemos a las máquinas para desplegar necesite introducir la contraseña para realizar operaciones sudo, ejecutaremos la primera vez:
+```
+ansible-playbook main.yml -i hosts --ask-become-pass
+
+```
+A partir de la segunda vez que despleguemos, si todo ha ido bien, el usuario podrá realizar operaciones sudo sin contraseña y no será necesario poner --ask-become-pass al desplegar.
 
 
 ## Tests
@@ -136,3 +148,14 @@ ssh-add /home/carmen/.ssh/id_rsa_tfm
 
 Esta clave RSA ha sido generada previamente con ssh-keygen y copiada a los respectivos dispositivos mediante ssh-copy-id.
 
+
+## IMPORTANTE
+Para desplegar este proyecto en las Raspberrys y que funcione K8s correctamente, es necesario modificar el fichero /etc/firmware/cmdline.txt y añadir lo siguiente:
+```
+cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1
+```
+para comprobar que funciona:
+
+cat /proc/cgroups
+
+Y deberíamos ver lo que hemos habilitado.

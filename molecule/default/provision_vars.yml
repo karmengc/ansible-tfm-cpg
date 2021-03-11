@@ -15,6 +15,10 @@ provision_rpis_cluster:
 
 provision_rpis_packages: ['vim','curl','wget','iproute2','nfs-common','python3-pip','nfs-kernel-server','apache2-utils']
 
+#Servidor de hora para las Islas Canarias
+provision_ntp_server: "0.uk.pool.ntp.org"
+provision_timezone: "Europe/London"
+
 provision_postfix: true
 
 provision_mail_from: "karmengc@gmail.com"

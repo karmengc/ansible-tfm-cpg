@@ -16,6 +16,10 @@ provision_rpis_cluster:
 #Listado de paquetes a instalar en todas las máquinas
 provision_rpis_packages: ['vim','curl','wget','iproute2','nfs-common','python3-pip','nfs-kernel-server','apache2-utils']
 
+#Servidor de hora para las Islas Canarias
+provision_ntp_server: "0.uk.pool.ntp.org"
+provision_timezone: "Europe/London"
+
 
 #Variables para instalación y configuración de postfix
 provision_postfix: true
