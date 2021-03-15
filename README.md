@@ -115,6 +115,16 @@ ansible-playbook main.yml -i hosts --ask-become-pass
 A partir de la segunda vez que despleguemos, si todo ha ido bien, el usuario podrá realizar operaciones sudo sin contraseña y no será necesario poner --ask-become-pass al desplegar.
 
 
+Dentro de ansible-provision-rpis se ha creado el tag ''provision\_install\_tasks'' para que una vez creado el cluster poder hacer --skip-tags del mismo 
+y así evitar una actualización del sistema o de paquetes no controlada. Para hacer uso de la misma:
+
+
+```
+ansible-playbook main.yml -i hosts --skip-tags "provision_install_tags"
+```
+
+
+
 ## Tests
 
 Para realizar pruebas se han configurado varios escenarios en Molecule con driver de Vagrant.
