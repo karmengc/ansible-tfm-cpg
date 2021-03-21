@@ -120,7 +120,7 @@ y así evitar una actualización del sistema o de paquetes no controlada. Para h
 
 
 ```
-ansible-playbook main.yml -i hosts --skip-tags "provision_install_tags"
+ansible-playbook main.yml -i hosts --skip-tags "provision_install_tasks"
 ```
 
 
@@ -142,6 +142,12 @@ Para loguearse en las máquinas de prueba por SSH:
 
 ```
 molecule login -h master --scenario-name=default
+```
+
+Para eliminar el escenario una vez finalizadas las pruebas:
+
+```
+molecule destroy --scenario-name default
 ```
 
 ## Iniciar agente SSH

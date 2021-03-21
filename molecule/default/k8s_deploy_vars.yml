@@ -9,6 +9,6 @@ app_log_volume: "/var/log/{{ app_name }}"
 #apps_to_deploy: {'myweb':'8080', 'mattermost':'8000', 'monitoring':'9090'}
 #apps_to_deploy: {'myweb':'8080', 'drupal':'80'}
 #apps_to_deploy: {'mattermost':'8000', 'drupal':'80'}
-apps_to_deploy: {'drupal':'80', 'monitoring':'9090', 'mattermost':'8000', 'monitoring.grafana':'80'}
+apps_to_deploy: {'myweb':'8080', 'drupal':'80', 'monitoring':'9090', 'mattermost':'8000', 'monitoring.grafana':'80'}
 kubernetes_create_admin_dashb_user: true
 
