@@ -2,3 +2,4 @@
 roles/*
 group_vars/cluster/provision_all_secret.yml
 host_vars/*/wifi_secret.yml
+molecule/default/provision_secret.yml
