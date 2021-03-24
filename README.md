@@ -26,6 +26,8 @@ vagrant plugin install [vagrant-share,vagrant-vbguest]
 Por último, necesitaremos un usuario en las máquinas destino con el cual hacer SSH y que tenga permisos de administrador.
 
 
+En las Raspberry Pis se ha instalado mediante la herramienta rpi-imager la imagen Ubuntu Server 20.10 (RPI 3/4/400) - ARM64.
+
 NOTA IMPORTANTE: para el despliegue de este proyecto en RPIs es necesario editar el fichero /boot/firmware/cmdline.txt de cada Raspberry y añadir al final de la línea:
 ```
 cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1
